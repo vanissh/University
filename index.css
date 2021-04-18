@@ -1,0 +1,48 @@
+.container{
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    
+}
+	
+input {
+    display: block;
+    margin: 3rem auto 2rem;
+}
+
+#processing{
+    
+    display: block;
+    margin: auto;
+    width: 30rem;
+    height: 5rem;
+    background-color: rgb(218, 26, 74);
+    border:  solid 2px rgb(218, 26, 74);
+    color: white;
+}
+
+#processing:hover {
+    background-color: #fff;
+    color:rgb(218, 26, 74);
+    cursor: pointer;
+}
+
+.downloadlink{
+    display: block;
+    margin:  2rem auto;
+    color: black;
+    font-size: 20px;
+    font-family: sans-serif; 
+}
+
+a:link {
+    color: rgb(97, 97, 97);
+}
+
+.error{
+    display: none;
+    margin: auto;
+    font-size: 50px;
+    color:rgb(255, 0, 0);
+    font-family: sans-serif; 
+}
