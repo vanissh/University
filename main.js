@@ -8,6 +8,7 @@ const input = document.getElementById('file'),
 
 let file, arr = [], lastArr;
 
+//чтение данных из пользовательского файла
 const readFile = () => {
 
     const promise = new Promise((resolve, reject) => {
@@ -21,7 +22,7 @@ const readFile = () => {
 
         reader.onload = function() {
            resolve(reader.result.split('\n')
-                    .map(item => item.replace(/[\r]/, '').trim()));
+                    .map(item => item.trim()));
         };
 
         reader.onerror = function(){
@@ -33,7 +34,7 @@ const readFile = () => {
 }
 
 const toNumArray = (arr) => {
-    let newArray = []; //массив с массивами чисел
+    let newArray = [];
 
     arr.forEach(item => {
 
@@ -53,7 +54,6 @@ const validator = (arr) => {
 }
 
 //лимит
-//callback
 const checkLimit = (arr) => {
     return toNumArray(arr).every((item) => 
             item.every(item => (-limit < item) && (limit > item)));
@@ -76,8 +76,7 @@ const filterArray = (arr) => {
 
 const toFormat = (arr) => {
     arr = arr.map(item => item.join(" "));
-
-    return arr.join('\n');;
+    return arr.join('\n');
 }
 
 const gnomeSort = (arr) => {
@@ -120,14 +119,15 @@ button.addEventListener('click', () => {
     linkWrap.style.display = 'none';
 
     async function foo() {
-        let arr = await readFile().then(result => result, reason => new Error(reason)); //????????
+        let arr = await readFile();
 
         let promise = new Promise((resolve) => {
-            if(validator(arr) && checkLimit(arr)){
-                resolve(toNumArray(arr));
-            } else {
+            if(!validator(arr)){
                 throw new Error('Incorrect data format. Try again!');
-            }});
+            } else if(!checkLimit(arr)){
+                throw new Error('Exceeding the permissible value.');
+            } else resolve(toNumArray(arr));
+        });
 
         let res = await promise;
         let firstResult = await filterArray(res);
@@ -142,3 +142,8 @@ button.addEventListener('click', () => {
         error.style.display = 'block';
     }); 
 });
+
+document.addEventListener('change',() => {
+    error.style.display = 'none';
+    linkWrap.style.display = 'none';
+})
